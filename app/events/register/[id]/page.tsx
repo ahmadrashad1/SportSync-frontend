@@ -16,7 +16,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Plus, Trash2, Loader2, ArrowLeft } from "lucide-react";
 import { FloatingPaper } from "@/components/floating-paper";
 import Navbar from "@/components/navbar";
-import { getApiBaseUrl } from "@/lib/apiBase";
+import { apiFetch, getApiBaseUrl } from "@/lib/apiBase";
 import { Badge } from "@/components/ui/badge";
 
 export default function RegisterForEventPage() {
@@ -74,7 +74,7 @@ export default function RegisterForEventPage() {
       setDebugInfo((prev) => prev + `\nValidating sub-event ID: ${id}`);
 
       // Find which event this sub-event belongs to
-      const eventsResponse = await fetch(
+      const eventsResponse = await apiFetch(
         `${getApiBaseUrl()}/api/events/allexceptmine/${userId}`
       );
       if (!eventsResponse.ok) {
@@ -94,7 +94,7 @@ export default function RegisterForEventPage() {
           (prev) => prev + `\nChecking sub-events for event ${event.id}`
         );
 
-        const subEventsResponse = await fetch(
+        const subEventsResponse = await apiFetch(
           `${getApiBaseUrl()}/sub-events/${event.id}`
         );
 
@@ -336,7 +336,7 @@ export default function RegisterForEventPage() {
       );
 
       // Ensure we're using the correct URL
-      const response = await fetch(
+      const response = await apiFetch(
         `${getApiBaseUrl()}/participants/register`,
         {
           method: "POST",

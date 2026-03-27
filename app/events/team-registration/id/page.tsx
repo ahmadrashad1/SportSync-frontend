@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { FloatingPaper } from "@/components/floating-paper";
 import Navbar from "@/components/navbar";
-import { getApiBaseUrl } from "@/lib/apiBase";
+import { apiFetch, getApiBaseUrl } from "@/lib/apiBase";
 import { Badge } from "@/components/ui/badge";
 
 export default function TeamRegistrationPage() {
@@ -70,7 +70,7 @@ export default function TeamRegistrationPage() {
       console.log("Fetching sub-event details for ID:", id);
 
       // Find which event this sub-event belongs to
-      const eventsResponse = await fetch(
+      const eventsResponse = await apiFetch(
         `${getApiBaseUrl()}/api/events/allexceptmine/${userId}`
       );
       if (!eventsResponse.ok) {
@@ -83,7 +83,7 @@ export default function TeamRegistrationPage() {
       // For each event, check its sub-events
       for (const event of events) {
         console.log(`Checking sub-events for event ${event.id}`);
-        const subEventsResponse = await fetch(
+        const subEventsResponse = await apiFetch(
           `${getApiBaseUrl()}/sub-events/${event.id}`
         );
 
@@ -222,7 +222,7 @@ export default function TeamRegistrationPage() {
         JSON.stringify(participantData, null, 2)
       );
 
-      const response = await fetch(
+      const response = await apiFetch(
         `${getApiBaseUrl()}/participants/register`,
         {
           method: "POST",

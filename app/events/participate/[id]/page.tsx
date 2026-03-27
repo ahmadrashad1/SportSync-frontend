@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import { FloatingPaper } from "@/components/floating-paper";
 import Navbar from "@/components/navbar";
-import { getApiBaseUrl } from "@/lib/apiBase";
+import { apiFetch, getApiBaseUrl } from "@/lib/apiBase";
 import { Badge } from "@/components/ui/badge";
 
 export default function EventSubEventsPage() {
@@ -58,7 +58,7 @@ export default function EventSubEventsPage() {
   const fetchEventDetails = async (eventId, userId) => {
     try {
       // Fetch event details
-      const eventsResponse = await fetch(
+      const eventsResponse = await apiFetch(
         `${getApiBaseUrl()}/api/events/allexceptmine/${userId}`
       );
       if (!eventsResponse.ok) {
@@ -77,7 +77,7 @@ export default function EventSubEventsPage() {
       setEvent(event);
 
       // Fetch sub-events
-      const subEventsResponse = await fetch(
+      const subEventsResponse = await apiFetch(
         `${getApiBaseUrl()}/sub-events/${eventId}`
       );
       if (!subEventsResponse.ok) {
@@ -186,7 +186,7 @@ export default function EventSubEventsPage() {
           )}`
       );
 
-      const response = await fetch(
+      const response = await apiFetch(
         `${getApiBaseUrl()}/participants/register`,
         {
           method: "POST",

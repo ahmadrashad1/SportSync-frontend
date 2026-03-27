@@ -8,3 +8,15 @@ export function getApiBaseUrl(): string {
   if (raw) return raw.replace(/\/$/, '');
   return 'http://localhost:8080';
 }
+
+/**
+ * Use for all backend calls. Adds ngrok's header so free tunnels don't block programmatic fetch()
+ * (browser still shows the interstitial for direct navigation).
+ */
+export function apiFetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+  const headers = new Headers(init?.headers ?? undefined);
+  if (!headers.has('ngrok-skip-browser-warning')) {
+    headers.set('ngrok-skip-browser-warning', 'true');
+  }
+  return fetch(input, { ...init, headers });
+}

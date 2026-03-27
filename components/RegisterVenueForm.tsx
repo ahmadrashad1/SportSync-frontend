@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { toast } from 'sonner';
 import { TWIN_CITIES_CENTER } from '@/lib/googleMapsUtils';
-import { getApiBaseUrl } from '@/lib/apiBase';
+import { apiFetch, getApiBaseUrl } from '@/lib/apiBase';
 
 // Dynamically import the map component to prevent server-side Leaflet initialization
 const VenueMap = dynamic(() => import('./VenueMap').then(mod => ({ default: mod.VenueMap })), {
@@ -60,7 +60,7 @@ const RegisterVenueForm: React.FC<RegisterVenueFormProps> = ({ onSuccess }) => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${getApiBaseUrl()}/api/grounds/register`, {
+      const response = await apiFetch(`${getApiBaseUrl()}/api/grounds/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

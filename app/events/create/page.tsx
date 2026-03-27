@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Navbar from "@/components/navbar";
-import { getApiBaseUrl } from "@/lib/apiBase";
+import { apiFetch, getApiBaseUrl } from "@/lib/apiBase";
 import { FloatingPaper } from "@/components/floating-paper";
 
 export default function CreateEventPage() {
@@ -62,17 +62,15 @@ export default function CreateEventPage() {
         ...prev,
         createdByUserId: Number.parseInt(storedUserId),
       }));
+      fetchGrounds();
     } else {
       router.push("/login");
     }
-
-    // Fetch available grounds
-    fetchGrounds();
   }, [router]);
 
   const fetchGrounds = async () => {
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `${getApiBaseUrl()}/api/grounds/available`
       );
       if (!response.ok) {
@@ -258,7 +256,7 @@ export default function CreateEventPage() {
       }));
 
       // Create event
-      const eventResponse = await fetch(`${getApiBaseUrl()}/api/events`, {
+      const eventResponse = await apiFetch(`${getApiBaseUrl()}/api/events`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -274,7 +272,7 @@ export default function CreateEventPage() {
       const eventResult = await eventResponse.json();
 
       // Create sub-events
-      const subEventsResponse = await fetch(
+      const subEventsResponse = await apiFetch(
         `${getApiBaseUrl()}/sub-events/create/${eventResult.id}`,
         {
           method: "POST",

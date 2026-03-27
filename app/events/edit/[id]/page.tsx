@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Navbar from "@/components/navbar";
-import { getApiBaseUrl } from "@/lib/apiBase";
+import { apiFetch, getApiBaseUrl } from "@/lib/apiBase";
 import { FloatingPaper } from "@/components/floating-paper";
 
 export default function EditEventPage() {
@@ -62,7 +62,7 @@ export default function EditEventPage() {
 
   const fetchGrounds = async () => {
     try {
-      const response = await fetch(
+      const response = await apiFetch(
         `${getApiBaseUrl()}/api/grounds/available`
       );
       if (!response.ok) {
@@ -78,7 +78,7 @@ export default function EditEventPage() {
   const fetchEventDetails = async (eventId, userId) => {
     try {
       // Fetch event details
-      const eventResponse = await fetch(
+      const eventResponse = await apiFetch(
         `${getApiBaseUrl()}/my-events/my/${userId}`
       );
       if (!eventResponse.ok) {
@@ -102,7 +102,7 @@ export default function EditEventPage() {
       setEventData(formattedEvent);
 
       // Fetch sub-events
-      const subEventsResponse = await fetch(
+      const subEventsResponse = await apiFetch(
         `${getApiBaseUrl()}/sub-events/${eventId}`
       );
       if (!subEventsResponse.ok) {
@@ -305,7 +305,7 @@ export default function EditEventPage() {
       }));
 
       // Update event
-      const eventResponse = await fetch(
+      const eventResponse = await apiFetch(
         `${getApiBaseUrl()}/my-events/update/${eventId}/${userId}`,
         {
           method: "PUT",
@@ -322,7 +322,7 @@ export default function EditEventPage() {
       }
 
       // Update sub-events
-      const subEventsResponse = await fetch(
+      const subEventsResponse = await apiFetch(
         `${getApiBaseUrl()}/sub-events/update/${eventId}/${userId}`,
         {
           method: "PUT",

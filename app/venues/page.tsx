@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { toast } from 'sonner';
 import { VenueMapMarker } from '@/lib/googleMapsUtils';
-import { getApiBaseUrl } from '@/lib/apiBase';
+import { apiFetch, getApiBaseUrl } from '@/lib/apiBase';
 
 const GroundMap = dynamic(() => import('@/components/GroundMap'), {
   ssr: false,
@@ -52,7 +52,7 @@ export default function VenuesPage() {
   const fetchVenues = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${getApiBaseUrl()}/api/grounds/available`);
+      const response = await apiFetch(`${getApiBaseUrl()}/api/grounds/available`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch venues');
