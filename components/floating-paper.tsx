@@ -1,18 +1,48 @@
-"\"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
 
+interface PaperItem {
+  id: number;
+  initialX: number;
+  initialY: number;
+  animateX: [number, number, number];
+  animateY: [number, number, number];
+  duration: number;
+}
+
 export function FloatingPaper({ count = 5 }) {
   const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
+  const [papers, setPapers] = useState<PaperItem[]>([]);
 
   useEffect(() => {
-    // Update dimensions only on client side
+    // Set initial dimensions
     setDimensions({
       width: window.innerWidth,
       height: window.innerHeight,
     });
+
+    // Generate random positions only on client
+    const generatedPapers: PaperItem[] = Array.from({ length: count }).map((_, i) => ({
+      id: i,
+      initialX: Math.random() * window.innerWidth,
+      initialY: Math.random() * window.innerHeight,
+      animateX: [
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerWidth,
+        Math.random() * window.innerWidth,
+      ],
+      animateY: [
+        Math.random() * window.innerHeight,
+        Math.random() * window.innerHeight,
+        Math.random() * window.innerHeight,
+      ],
+      duration: 20 + Math.random() * 10,
+    }));
+
+    setPapers(generatedPapers);
 
     const handleResize = () => {
       setDimensions({
@@ -23,33 +53,30 @@ export function FloatingPaper({ count = 5 }) {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [count]);
+
+  // Don't render until papers are generated on client
+  if (papers.length === 0) {
+    return <div className="relative w-full h-full" />;
+  }
 
   return (
     <div className="relative w-full h-full">
-      {Array.from({ length: count }).map((_, i) => (
+      {papers.map((paper) => (
         <motion.div
-          key={i}
+          key={paper.id}
           className="absolute"
           initial={{
-            x: Math.random() * dimensions.width,
-            y: Math.random() * dimensions.height,
+            x: paper.initialX,
+            y: paper.initialY,
           }}
           animate={{
-            x: [
-              Math.random() * dimensions.width,
-              Math.random() * dimensions.width,
-              Math.random() * dimensions.width,
-            ],
-            y: [
-              Math.random() * dimensions.height,
-              Math.random() * dimensions.height,
-              Math.random() * dimensions.height,
-            ],
+            x: paper.animateX,
+            y: paper.animateY,
             rotate: [0, 180, 360],
           }}
           transition={{
-            duration: 20 + Math.random() * 10,
+            duration: paper.duration,
             repeat: Number.POSITIVE_INFINITY,
             ease: "linear",
           }}

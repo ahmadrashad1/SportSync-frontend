@@ -39,12 +39,14 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
       <div className="hidden md:flex items-center space-x-8">
         <NavLink href="/features">Features</NavLink>
         <NavLink href="/news">News</NavLink>
+        <NavLink href="/venues">Discover Venues</NavLink>
         {isLoggedIn && (
           <>
             <NavLink href="/events/create">Create Event</NavLink>
             <NavLink href="/events/my-events">My Events</NavLink>
             <NavLink href="/events/participate">Participate</NavLink>
             <NavLink href="/grounds/book">Book Ground</NavLink>
+            <NavLink href="/grounds/register">Register Ground</NavLink>
           </>
         )}
       </div>
@@ -117,6 +119,12 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
             >
               News
             </Link>
+            <Link
+              href="/venues"
+              className="text-gray-700 hover:text-primary py-2"
+            >
+              Discover Venues
+            </Link>
             {isLoggedIn && (
               <>
                 <Link
@@ -142,6 +150,12 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                   className="text-gray-700 hover:text-primary py-2"
                 >
                   Book Ground
+                </Link>
+                <Link
+                  href="/grounds/register"
+                  className="text-gray-700 hover:text-primary py-2"
+                >
+                  Register Ground
                 </Link>
               </>
             )}
