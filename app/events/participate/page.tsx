@@ -15,6 +15,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Calendar, Clock, Users, CheckCircle } from "lucide-react";
 import { FloatingPaper } from "@/components/floating-paper";
 import Navbar from "@/components/navbar";
+import { getApiBaseUrl } from "@/lib/apiBase";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ParticipateEventsPage() {
@@ -31,7 +32,7 @@ export default function ParticipateEventsPage() {
   const fetchRegisteredEvents = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/participants/user/${userId}`
+        `${getApiBaseUrl()}/participants/user/${userId}`
       );
 
       if (response.ok) {
@@ -73,7 +74,7 @@ export default function ParticipateEventsPage() {
     try {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:8080/api/events/allexceptmine/${userId}`
+        `${getApiBaseUrl()}/api/events/allexceptmine/${userId}`
       );
 
       if (!response.ok) {

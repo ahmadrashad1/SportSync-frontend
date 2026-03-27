@@ -27,6 +27,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { FloatingPaper } from "@/components/floating-paper";
 import Navbar from "@/components/navbar";
+import { getApiBaseUrl } from "@/lib/apiBase";
 
 // Define types for the news API response
 interface NewsArticle {
@@ -92,7 +93,7 @@ export default function NewsPage() {
   const fetchSportsNews = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8080/api/news/sports");
+      const response = await fetch(`${getApiBaseUrl()}/api/news/sports`);
 
       if (!response.ok) {
         throw new Error("Failed to fetch sports news");

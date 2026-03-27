@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { FloatingPaper } from "@/components/floating-paper";
 import Navbar from "@/components/navbar";
+import { getApiBaseUrl } from "@/lib/apiBase";
 import { Badge } from "@/components/ui/badge";
 
 export default function EventSubEventsPage() {
@@ -58,7 +59,7 @@ export default function EventSubEventsPage() {
     try {
       // Fetch event details
       const eventsResponse = await fetch(
-        `http://localhost:8080/api/events/allexceptmine/${userId}`
+        `${getApiBaseUrl()}/api/events/allexceptmine/${userId}`
       );
       if (!eventsResponse.ok) {
         throw new Error(
@@ -77,7 +78,7 @@ export default function EventSubEventsPage() {
 
       // Fetch sub-events
       const subEventsResponse = await fetch(
-        `http://localhost:8080/sub-events/${eventId}`
+        `${getApiBaseUrl()}/sub-events/${eventId}`
       );
       if (!subEventsResponse.ok) {
         throw new Error(
@@ -186,7 +187,7 @@ export default function EventSubEventsPage() {
       );
 
       const response = await fetch(
-        "http://localhost:8080/participants/register",
+        `${getApiBaseUrl()}/participants/register`,
         {
           method: "POST",
           headers: {

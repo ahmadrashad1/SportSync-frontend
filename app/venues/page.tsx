@@ -1,9 +1,19 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { toast } from 'sonner';
-import GroundMap from '@/components/GroundMap';
 import { VenueMapMarker } from '@/lib/googleMapsUtils';
+import { getApiBaseUrl } from '@/lib/apiBase';
+
+const GroundMap = dynamic(() => import('@/components/GroundMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-96 flex items-center justify-center bg-gray-100">
+      <p className="text-gray-500">Loading venue map...</p>
+    </div>
+  ),
+});
 
 interface VenueData {
   id: number;
@@ -42,7 +52,7 @@ export default function VenuesPage() {
   const fetchVenues = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/grounds/available');
+      const response = await fetch(`${getApiBaseUrl()}/api/grounds/available`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch venues');

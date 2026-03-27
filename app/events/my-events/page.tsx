@@ -8,6 +8,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle, Calendar, Clock, Edit, Plus, Trash2 } from "lucide-react"
 import { SparklesCore } from "@/components/sparkles"
 import Navbar from "@/components/navbar"
+import { getApiBaseUrl } from "@/lib/apiBase"
 import {
   Dialog,
   DialogContent,
@@ -42,7 +43,7 @@ export default function MyEventsPage() {
   const fetchMyEvents = async (userId) => {
     try {
       setLoading(true)
-      const response = await fetch(`http://localhost:8080/my-events/my/${userId}`)
+      const response = await fetch(`${getApiBaseUrl()}/my-events/my/${userId}`)
 
       if (!response.ok) {
         throw new Error("Failed to fetch events")
@@ -59,7 +60,7 @@ export default function MyEventsPage() {
 
   const handleDeleteEvent = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/my-events/delete/${deleteEventId}/${userId}`, {
+      const response = await fetch(`${getApiBaseUrl()}/my-events/delete/${deleteEventId}/${userId}`, {
         method: "DELETE",
       })
 

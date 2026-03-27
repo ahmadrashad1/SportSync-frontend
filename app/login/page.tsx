@@ -11,6 +11,7 @@ import { AlertCircle, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import { FloatingPaper } from "@/components/floating-paper"
 import Navbar from "@/components/navbar"
+import { getApiBaseUrl } from "@/lib/apiBase"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -51,7 +52,7 @@ export default function LoginPage() {
         return
       }
 
-      const response = await fetch("http://localhost:8080/auth/login", {
+      const response = await fetch(`${getApiBaseUrl()}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

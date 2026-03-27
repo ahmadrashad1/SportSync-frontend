@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Navbar from "@/components/navbar";
+import { getApiBaseUrl } from "@/lib/apiBase";
 import { FloatingPaper } from "@/components/floating-paper";
 
 export default function CreateEventPage() {
@@ -72,7 +73,7 @@ export default function CreateEventPage() {
   const fetchGrounds = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/grounds/available"
+        `${getApiBaseUrl()}/api/grounds/available`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch grounds");
@@ -257,7 +258,7 @@ export default function CreateEventPage() {
       }));
 
       // Create event
-      const eventResponse = await fetch("http://localhost:8080/api/events", {
+      const eventResponse = await fetch(`${getApiBaseUrl()}/api/events`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -274,7 +275,7 @@ export default function CreateEventPage() {
 
       // Create sub-events
       const subEventsResponse = await fetch(
-        `http://localhost:8080/sub-events/create/${eventResult.id}`,
+        `${getApiBaseUrl()}/sub-events/create/${eventResult.id}`,
         {
           method: "POST",
           headers: {

@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Navbar from "@/components/navbar";
+import { getApiBaseUrl } from "@/lib/apiBase";
 import { FloatingPaper } from "@/components/floating-paper";
 
 export default function EditEventPage() {
@@ -62,7 +63,7 @@ export default function EditEventPage() {
   const fetchGrounds = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/grounds/available"
+        `${getApiBaseUrl()}/api/grounds/available`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch grounds");
@@ -78,7 +79,7 @@ export default function EditEventPage() {
     try {
       // Fetch event details
       const eventResponse = await fetch(
-        `http://localhost:8080/my-events/my/${userId}`
+        `${getApiBaseUrl()}/my-events/my/${userId}`
       );
       if (!eventResponse.ok) {
         throw new Error("Failed to fetch events");
@@ -102,7 +103,7 @@ export default function EditEventPage() {
 
       // Fetch sub-events
       const subEventsResponse = await fetch(
-        `http://localhost:8080/sub-events/${eventId}`
+        `${getApiBaseUrl()}/sub-events/${eventId}`
       );
       if (!subEventsResponse.ok) {
         throw new Error("Failed to fetch sub-events");
@@ -305,7 +306,7 @@ export default function EditEventPage() {
 
       // Update event
       const eventResponse = await fetch(
-        `http://localhost:8080/my-events/update/${eventId}/${userId}`,
+        `${getApiBaseUrl()}/my-events/update/${eventId}/${userId}`,
         {
           method: "PUT",
           headers: {
@@ -322,7 +323,7 @@ export default function EditEventPage() {
 
       // Update sub-events
       const subEventsResponse = await fetch(
-        `http://localhost:8080/sub-events/update/${eventId}/${userId}`,
+        `${getApiBaseUrl()}/sub-events/update/${eventId}/${userId}`,
         {
           method: "PUT",
           headers: {

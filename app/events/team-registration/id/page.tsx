@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { FloatingPaper } from "@/components/floating-paper";
 import Navbar from "@/components/navbar";
+import { getApiBaseUrl } from "@/lib/apiBase";
 import { Badge } from "@/components/ui/badge";
 
 export default function TeamRegistrationPage() {
@@ -70,7 +71,7 @@ export default function TeamRegistrationPage() {
 
       // Find which event this sub-event belongs to
       const eventsResponse = await fetch(
-        `http://localhost:8080/api/events/allexceptmine/${userId}`
+        `${getApiBaseUrl()}/api/events/allexceptmine/${userId}`
       );
       if (!eventsResponse.ok) {
         throw new Error("Failed to fetch events");
@@ -83,7 +84,7 @@ export default function TeamRegistrationPage() {
       for (const event of events) {
         console.log(`Checking sub-events for event ${event.id}`);
         const subEventsResponse = await fetch(
-          `http://localhost:8080/sub-events/${event.id}`
+          `${getApiBaseUrl()}/sub-events/${event.id}`
         );
 
         if (subEventsResponse.ok) {
@@ -222,7 +223,7 @@ export default function TeamRegistrationPage() {
       );
 
       const response = await fetch(
-        "http://localhost:8080/participants/register",
+        `${getApiBaseUrl()}/participants/register`,
         {
           method: "POST",
           headers: {

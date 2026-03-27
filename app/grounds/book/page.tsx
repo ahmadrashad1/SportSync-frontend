@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Navbar from "@/components/navbar";
+import { getApiBaseUrl } from "@/lib/apiBase";
 import {
   Dialog,
   DialogContent,
@@ -72,7 +73,7 @@ export default function BookGroundPage() {
   const fetchGrounds = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/grounds/available"
+        `${getApiBaseUrl()}/api/grounds/available`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch grounds");
@@ -89,7 +90,7 @@ export default function BookGroundPage() {
   const fetchBookings = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/bookings/user/${userId}`
+        `${getApiBaseUrl()}/api/bookings/user/${userId}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch bookings");
@@ -169,7 +170,7 @@ export default function BookGroundPage() {
         endTime: formatDateForBackend(bookingData.endTime),
       };
 
-      const response = await fetch("http://localhost:8080/api/bookings/book", {
+      const response = await fetch(`${getApiBaseUrl()}/api/bookings/book`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -205,7 +206,7 @@ export default function BookGroundPage() {
   const handleDeleteBooking = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/bookings/${deleteBookingId}`,
+        `${getApiBaseUrl()}/api/bookings/${deleteBookingId}`,
         {
           method: "DELETE",
         }

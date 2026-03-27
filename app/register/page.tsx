@@ -18,6 +18,7 @@ import { AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { FloatingPaper } from "@/components/floating-paper";
 import Navbar from "@/components/navbar";
+import { getApiBaseUrl } from "@/lib/apiBase";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -63,7 +64,7 @@ export default function RegisterPage() {
         return;
       }
 
-      const response = await fetch("http://localhost:8080/auth/register", {
+      const response = await fetch(`${getApiBaseUrl()}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
